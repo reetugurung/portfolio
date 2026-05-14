@@ -12,9 +12,10 @@ connectDB();
 const app = express();
 
 
-const allowedOrigins = [
-  "http://localhost:3000",          
-  process.env.CLIENT_URL,      
+const allowedOrigins = ['https://portfolio-beta-puce-o5vu8ez986.vercel.app/',
+  
+  'http://localhost:5173', 
+  'http://localhost:3000'
 ];
 
 app.use(cors({
@@ -22,7 +23,7 @@ app.use(cors({
 
     if (!origin) return callback(null, true);
     
-
+   
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
