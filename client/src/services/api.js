@@ -1,16 +1,19 @@
 import axios from 'axios';
 
-let prodURL = process.env.NEXT_PUBLIC_API_URL || '';
-if (prodURL.endsWith('/')) {
-  prodURL = prodURL.slice(0, -1);
+
+let rawBaseURL = process.env.NEXT_PUBLIC_API_URL;
+
+
+let finalBaseURL = 'http://localhost:5001/api';
+
+if (rawBaseURL && rawBaseURL !== 'undefined') {
+
+  const cleanURL = rawBaseURL.endsWith('/') ? rawBaseURL.slice(0, -1) : rawBaseURL;
+  finalBaseURL = `${cleanURL}/api`;
 }
 
-const baseURL = prodURL 
-  ? `${prodURL}/api` 
-  : 'http://localhost:5001/api';
-
 const API = axios.create({
-  baseURL: baseURL,
+  baseURL: finalBaseURL,
 });
 
 API.interceptors.request.use((req) => {

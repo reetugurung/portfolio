@@ -1,8 +1,11 @@
 "use client";
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Typewriter from './Typewriter';
+
 
 const Hero = () => {
+  const description ="MERN stack developer focused on building clean, functional, and user-centric web applications. Specializing in React, Node.js, and modern frontend styling, I enjoy turning design concepts into responsive, production-ready code."
   return (
     <section className="relative overflow-hidden pt-32 pb-20 px-6">
      
@@ -19,7 +22,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-  Hi, I'm{" "}
+  Hi, I'm a{" "}
   <motion.span
     className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500"
     animate={{ 
@@ -39,10 +42,10 @@ const Hero = () => {
     Ritu Gurung
   </motion.span>
 </h1>
-            <p className="text-slate-500 dark:text-slate-400 text-xl max-w-2xl mb-10 leading-relaxed">
-              MERN stack developer focused on building <span className="text-purple-600 dark:text-purple-400 font-medium">beautiful</span>, functional, and user-centric applications.
-            </p>
-            <div className="flex gap-4 justify-center md:justify-start items-center">
+<p className="text-lg text-gray-600 min-h-[80px] leading-relaxed">
+        <Typewriter text={description} speed={25} />
+      </p>
+            <div className="flex gap-4 flex-col md:flex-row justify-center md:justify-start items-center">
               <Link href="/projects">
                <motion.button 
                 whileHover={{ scale: 1.1, y: -5 }} 
@@ -54,8 +57,8 @@ const Hero = () => {
               </Link>
               <a href="#contact">
                 <motion.button 
-                whileHover={{ scale: 1.1, y: -5 }} // Bounces slightly up on hover
-                 whileTap={{ scale: 0.95 }} // Shrinks slightly when clicked
+                whileHover={{ scale: 1.1, y: -5 }} 
+                 whileTap={{ scale: 0.95 }} 
               className="bg-amber-50 text-black px-8 py-4 rounded-full font-bold shadow-lg"
           >
           Contact Me
