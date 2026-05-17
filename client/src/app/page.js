@@ -17,6 +17,46 @@ import Skills from '../components/Skills';
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
+  const [editingProjectId, setEditingProjectId] = useState(null);
+  const handleEditClick = (project) => {
+  setEditingProjectId(project._id);
+  setFormData({
+    title: project.title,
+    description: project.description,
+    link: project.link || '',
+  });
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    if (editingProjectId) {
+
+      const { data } = await API.put(`/projects/${editingProjectId}`, formData);
+      
+
+      setProjects((prev) =>
+        prev.map((proj) => (proj._id === editingProjectId ? data : proj))
+      );
+      
+   
+      setEditingProjectId(null);
+    } else {
+   
+      const { data } = await API.post('/projects', formData);
+      setProjects((prev) => [...prev, data]);
+    }
+
+   
+    setFormData({ title: '', description: '', link: '' });
+  } catch (error) {
+    console.error("Error saving project:", error);
+  }
+};
+  
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+const [formData, setFormData] = useState({ title: '', description: '', link: '' });
 
   useEffect(() => {
     const fetchProjects = async () => {
