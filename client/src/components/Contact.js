@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BackgroundGlow } from './BackgroundGlow';
+import API from '../services/api';
 
 const Contact = () => {
-  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,23 +18,13 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
 
-      if (response.ok) {
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        setTimeout(() => setStatus(null), 5000);
-      } else {
-        setStatus('error');
-      }
+      const response = await API.post('/contact', formData);
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setStatus(null), 5000);
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("Submission error details:", error);
       setStatus('error');
     }
   };
@@ -45,9 +35,8 @@ const Contact = () => {
 
   return (
     <section id="contact" className="relative py-24 px-6 overflow-hidden scroll-mt-24">
+      <BackgroundGlow variant="alt" />
       
-    <BackgroundGlow  variant="alt" />
-            <div className="text-center mb-16">
       <AnimatePresence>
         {status === 'success' && (
           <motion.div 
@@ -78,6 +67,7 @@ const Contact = () => {
             Ready to start a project? I'm currently available for freelance work and new opportunities.
           </p>
         </div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -160,7 +150,6 @@ const Contact = () => {
             )}
           </form>
         </motion.div>
-      </div>
       </div>
     </section>
   );
