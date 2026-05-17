@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
       `,
     };
 
-    // 4. Send the mail
+ 
     await transporter.sendMail(mailOptions);
 
     res.status(201).json({ message: "Message saved and Email sent!" });
